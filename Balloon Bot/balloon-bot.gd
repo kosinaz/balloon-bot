@@ -1,38 +1,65 @@
 extends KinematicBody2D
 
-var _velocity = Vector2()
-export var speed = Vector2(500.0, 1500.0)
-var _gravity = 3500.0
-export var dead = false
+var jump_power_initial = -200
+var jump_power = 0
+var jump_time_max = 0.3
+var jump_timer = 0.0
+var jump_velocity_step = 20
+var is_jumping = false
+var velocity = Vector2()
+var speed = 400
+var gravity = 2000.0
 var flipped = true
+var air = 1
+var min_radius = 3
+var min_height = 6
+var min_y = 1
+var max_radius = 7
+var max_height = 8
+var max_y = -4
 
 func _physics_process(delta):
-	_velocity.y += _gravity * delta
-	var direction = get_direction()
-	_velocity = calculate_move_velocity(_velocity, direction, speed)
-	var snap: Vector2 = Vector2.DOWN * 60.0 if direction.y == 0.0 else Vector2.ZERO
-	_velocity = move_and_slide_with_snap(_velocity, snap, Vector2.UP, true)
+	$CollisionShape2D.shape.radius = min_radius + air * (max_radius - min_radius)
+	$CollisionShape2D.shape.height = min_height + air * (max_height - min_height)
+	$CollisionShape2D.position.y = min_y + air * (max_y - min_y)
+	$Balloon/Balloon.frame = 10 * air
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	
+	if is_on_ceiling():
+		jump_timer = jump_time_max
+	
+	if is_on_floor():
+		jump_timer = 0.0
+		is_jumping = false
+	else:
+		jump_timer += delta
+		
+	if Input.is_action_pressed("ui_up") and is_on_floor() and air > 0:
+		air = max(0, air - 0.01)
+		jump_timer = 0.0
+		is_jumping = true
+		velocity.y = jump_power_initial
+		jump_power = jump_power_initial
+	elif Input.is_action_pressed("ui_up") and is_jumping and jump_timer < jump_time_max and air > 0:
+		air = max(0, air - 0.01)
+		jump_power -= jump_velocity_step
+		velocity.y = jump_power
+		
+	if Input.is_action_pressed("ui_left"):
+		velocity.x = -speed
+	elif Input.is_action_pressed("ui_right"):
+		velocity.x = speed
+	else:
+		velocity.x = 0
+		
+	# warning-ignore:return_value_discarded
+	move_and_slide(velocity, Vector2.UP)
 
-func get_direction():
-	if dead:
-		return Vector2()
-	return Vector2(
-		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-		-Input.get_action_strength("ui_up") if is_on_floor() and Input.is_action_pressed("ui_up") else 0.0
-	)
-
-func calculate_move_velocity(linear_velocity, direction, move_speed):
-	var velocity = linear_velocity
-	velocity.x = move_speed.x * direction.x
-	if direction.y != 0.0:
-		velocity.y = move_speed.y * direction.y
-	return velocity
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if dead:
-		$AnimationPlayer.play("dead")
-	elif Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right"):
 		$AnimationPlayer.play("run" if is_on_floor() else "idle")
 		if flipped:
 			scale.x = -1
@@ -47,3 +74,7 @@ func _process(_delta):
 	else:
 		$AnimationPlayer.play("idle")
 		
+
+func _input(event):
+	if event.is_action_released("ui_up") and is_jumping:
+		jump_timer = jump_time_max
