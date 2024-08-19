@@ -156,12 +156,14 @@ func _physics_process(delta):
 		air = max(0, air - 0.002)
 	if is_on_ceiling():
 		velocity.y *= -1
+	$"../CanvasLayer/ProgressBar".value = air
 
 	# On ground
 	if is_on_floor():
 		is_jumping = false
-#		if not was_on_floor:
+		if not was_on_floor:
 #			landed.emit()
+			_on_landed()
 
 		if is_jump_buffer and not was_on_floor:
 			is_jump_buffer = false
@@ -274,9 +276,12 @@ func _process(_delta):
 
 # Initiate jump if pressed jump button
 func jump():
+	if air == 0:
+		return
 	velocity.y = -jump_velocity
 	is_jumping = true
 #	jumped.emit()
+	_on_jumped()
 
 func start_coyote(delta):
 	print("Starting coyote with duration of %.3fs" % coyote_duration)
@@ -305,6 +310,9 @@ func _on_step_player_finished():
 	is_playing_step = false
 
 func _on_jumped():
+	jump_particles = jump_particles.duplicate()
+	get_parent().add_child(jump_particles)
+	jump_particles.position = position + Vector2(0, 3)
 	jump_particles.emitting = true
 #	animation_player.play("jump")
 	animation_player.play("idle")
@@ -312,6 +320,9 @@ func _on_jumped():
 	jump_player.play()
 
 func _on_landed():
+	land_particles = land_particles.duplicate()
+	get_parent().add_child(land_particles)
+	land_particles.position = position + Vector2(0, 5)
 	land_particles.emitting = true
 #	animation_player.play("land")
 	animation_player.play("idle")
