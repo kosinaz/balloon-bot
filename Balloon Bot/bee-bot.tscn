@@ -19,7 +19,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -4 ), Vector2( 0, 0 ), Vector2( 0, 4 ) ]
 }
 
-[node name="BeeBot" type="Node2D"]
+[node name="BeeBot" type="KinematicBody2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -2.69467 )
