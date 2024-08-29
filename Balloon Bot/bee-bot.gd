@@ -21,4 +21,8 @@ func update_target():
 	target = new_target
 
 func _on_Timer_timeout():
-	pass
+	var stinger = $Stinger.duplicate()
+	stinger.position = position + Vector2(0, 8)
+	get_parent().add_child(stinger)
+	stinger.velocity = global_position.direction_to(target + Vector2(0, -2))
+	stinger.show()

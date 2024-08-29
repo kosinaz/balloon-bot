@@ -40,11 +40,11 @@ anims/idle = SubResource( 1 )
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
-[node name="Stinger" parent="." instance=ExtResource( 3 )]
-visible = false
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 100.0
 radius = 50.0
+
+[node name="Stinger" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
