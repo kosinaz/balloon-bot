@@ -284,10 +284,10 @@ func jump():
 	_on_jumped()
 
 func start_coyote(delta):
-	print("Starting coyote with duration of %.3fs" % coyote_duration)
-	print("Delta is %.3fs" % delta)
+#	print("Starting coyote with duration of %.3fs" % coyote_duration)
+#	print("Delta is %.3fs" % delta)
 	var time_left = coyote_duration - delta
-	print("Time left is %.3fs" % time_left)
+#	print("Time left is %.3fs" % time_left)
 	coyote_timer.start(time_left)
 	is_coyote = true
 #	coyote_started.emit()
