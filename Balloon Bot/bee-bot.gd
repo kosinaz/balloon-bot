@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var target = position
+onready var target = global_position
 
 func _physics_process(_delta):
 	update_target()
@@ -12,7 +12,7 @@ func _physics_process(_delta):
 	$Sprite.flip_h = $"../BalloonBot".position.x > position.x
 
 func update_target():
-	if $"../BalloonBot".position.distance_to(position) > 150:
+	if $"../BalloonBot".global_position.distance_to(global_position) > 500:
 		return
 	var new_target = $"../BalloonBot".global_position + Vector2(0, -32)
 	$NavigationAgent2D.set_target_location(new_target)
@@ -21,7 +21,13 @@ func update_target():
 	target = new_target
 
 func _on_Timer_timeout():
-	var stinger = $Stinger.duplicate()
+	if target == global_position:
+		return
+	$RayCast2D.cast_to = target - global_position
+	if $RayCast2D.get_collider() and not $RayCast2D.get_collider().name == "BalloonBot":
+		return
+	var stinger = $StingerBase.duplicate()
+	stinger.name = "StingerClone"
 	stinger.position = position + Vector2(0, 8)
 	get_parent().add_child(stinger)
 	stinger.velocity = global_position.direction_to(target + Vector2(0, -2))

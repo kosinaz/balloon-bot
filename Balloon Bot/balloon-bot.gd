@@ -355,3 +355,6 @@ func _on_jump_buffer_used_debug():
 	
 func get_gravity():
 	return Vector2(0, global_gravity)
+	
+func deflate():
+	air = max(0, air - 0.1)
