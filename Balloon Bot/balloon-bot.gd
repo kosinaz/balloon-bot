@@ -358,3 +358,4 @@ func get_gravity():
 	
 func deflate():
 	air = max(0, air - 0.1)
+	$"../CanvasLayer/AnimationPlayer".play("deflate")

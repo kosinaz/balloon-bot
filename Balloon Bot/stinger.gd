@@ -6,8 +6,9 @@ var velocity = Vector2()
 func _physics_process(delta):
 	position += velocity * delta * 200
 
-
 func _on_Stinger_body_entered(body):
-	if body.name == "BalloonBot" and not name == "StingerBase":
+	if name == "StingerBase":
+		return
+	if body.name == "BalloonBot":
 		body.deflate()
 	queue_free()

@@ -48,6 +48,7 @@ radius = 50.0
 visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 0, 8 )
 enabled = true
 cast_to = Vector2( 0, 20 )
 
