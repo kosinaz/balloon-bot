@@ -223,18 +223,21 @@ func _physics_process(delta):
 			facing_right = false
 
 		was_on_floor = false
-		
-		if $"../TileMap".world_to_map(position).x < -55:
-			$"../CanvasLayer/VictoryLabel".show()
-			$"../CanvasLayer/RestartButton".show()
-		if $"../TileMap".world_to_map(position).y > 70:
-# warning-ignore:return_value_discarded
-			get_tree().reload_current_scene()
 
 # warning-ignore:return_value_discarded
 	move_and_slide(velocity, Vector2.UP)
 
 func _process(_delta):
+	
+	if $"../TileMap".world_to_map(position).x < -55:
+		$"../CanvasLayer/VictoryLabel".show()
+		$"../CanvasLayer/RestartButton".show()
+	if $"../TileMap".world_to_map(position).y > 70:
+# warning-ignore:return_value_discarded
+		if $"../ButterflyBot".fly_tween: $"../ButterflyBot".fly_tween.kill()
+		if $"../ButterflyBot".fall_tween: $"../ButterflyBot".fall_tween.kill()
+		get_tree().reload_current_scene()
+		
 	# Animate and adjust the sprite
 
 	# Flip the sprite depending on the facing direction
