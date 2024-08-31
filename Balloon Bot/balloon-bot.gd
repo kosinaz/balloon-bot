@@ -2,54 +2,54 @@ extends KinematicBody2D
 
 ## The maximum horizontal speed of the player running in px/s.
 ## This is also the maximum speed player can acccelerate to when jumping.
-export var speed: float = 250.0
+var speed: float = 100.0
 
 ## The acceleration of the player when running on ground in px/s².
-export var acceleration: float = 1500.0
+var acceleration: float = 600.0
 
 ## The deceleration (braking) of the player when running on ground in px/s².
-export var deceleration: float = 1750.0
+var deceleration: float = 1200.0
 
 ## The acceleration of the player when moving in the air in px/s².
-export var air_acceleration: float = 1250.0
+var air_acceleration: float = 600.0
 
 ## The deceleration (braking) of the player when moving in the air in px/s².
-export var air_deceleration: float = 1500.0
+var air_deceleration: float = 1200.0
 
 ## The vertical velocity of the player when jumping in px/s.
 ## This determines how high the player can jump, depending on the gravity multiplier.
-export var jump_velocity: float = 450.0
+var jump_velocity: float = 100.0
 
 ## The default gravity multiplier of the player. It's simply multiplying the gravity vector
 ## with this value. It's affected by the global gravity and mofidiers, like Area2D regions.
 ## This value is also used when falling without jumping.
-export var gravity_multiplier: float = 1.0
+var gravity_multiplier: float = 1.0
 
 ## The gravity multiplier of the player when falling after jumping.
 ## This multiplier is applied on top of the standard gravity_multiplier.
 ## This is intended to make the player fall faster after the upward phase of jumping
 ## is over.
-export var gravity_fall_multiplier: float = 2.5
+var gravity_fall_multiplier: float = 2.5
 
 ## The maximum vertical velocity (px/s) of the player when falling (due to jumping or not).
 ## This can also be used to simulate gliding when set to a low value.
-export var vertical_terminal_velocity: float = 750.0
+var vertical_terminal_velocity: float = 400.0
 
 ## The multiplier of the player's vertical velocity applied when releasing the jump button.
 ## This allows the player to release jump button earlier to make the jump shorter.
 ## In other words, the maximum jump height can be achieved by holding the jump button.
 ## When set to 1.0, the release of the jump button won't affect the jump height.
 ## Setting this to 0.0, will make the player instantly start falling.
-export var jump_release_stop_multiplier: float = 0.6
+var jump_release_stop_multiplier: float = 0.2
 
 ## The coyote time duration in seconds.
 ## The player will be able to jump for this extra amount of time after
 ## stopped touching the ground. It reduces the risk of the player falling off the platform
 ## when intended to jump.
-export var coyote_duration: float = 0.1
+var coyote_duration: float = 0.1
 
 ## Display the coyote timer debug label.
-export var debug_coyote: bool = false
+var debug_coyote: bool = false
 
 ## The jump buffer duration in seconds.
 ## If the player presses the jump button before the character touches the ground, the
@@ -57,10 +57,10 @@ export var debug_coyote: bool = false
 ## specified by this value, the jump will happen automatically.
 ## This is to avoid situations where the player presses "jump" too early. This simply
 ## captures the intent of jumping for the specified amount of time.
-export var jump_buffer_duration: float = 0.12
+var jump_buffer_duration: float = 0.4
 
 ## Display the jump buffer timer debug label.
-export var debug_jump_buffer: bool = false
+var debug_jump_buffer: bool = false
 
 
 var is_jumping: bool = false ## Is the reason for the player to be in the air due to a jump?
@@ -104,7 +104,7 @@ onready var jump_buffer_label: Label = $JumpBufferDebug
 #signal jump_buffer_used ## Emitted when the player jumps due to the jump buffer timer.
 
 # Godot 3.5
-export var global_gravity = 1000
+var global_gravity = 1500
 var velocity = Vector2()
 var flipped = true
 
