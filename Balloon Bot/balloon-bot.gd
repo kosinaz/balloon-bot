@@ -145,8 +145,6 @@ func _ready():
 func _physics_process(delta):
 	
 	# Custom
-	if $"../TileMap".get_cellv($"../TileMap".world_to_map(position)) == 1:
-		air = min(1, air + 0.01)
 	$CollisionShape2D.shape.radius = min_radius + air * (max_radius - min_radius)
 	$CollisionShape2D.shape.height = min_height + air * (max_height - min_height)
 	$CollisionShape2D.position.x = min_x + air * (max_x - min_x)

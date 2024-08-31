@@ -30,5 +30,5 @@ func _on_Timer_timeout():
 	stinger.name = "StingerClone"
 	stinger.position = position + Vector2(0, 8)
 	get_parent().add_child(stinger)
-	stinger.velocity = global_position.direction_to(target + Vector2(0, -2))
+	stinger.velocity = global_position.direction_to(target + Vector2(0, 8))
 	stinger.show()
