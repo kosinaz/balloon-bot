@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 ## The maximum horizontal speed of the player running in px/s.
 ## This is also the maximum speed player can acccelerate to when jumping.
-var max_speed: float = 250.0
+var max_speed: float = 275.0
 
 ## The acceleration of the player when running on ground in px/s².
 var acceleration: float = 1250.0
@@ -18,7 +18,7 @@ var air_deceleration: float = 2500.0
 
 ## The vertical velocity of the player when jumping in px/s.
 ## This determines how high the player can jump, depending on the gravity multiplier.
-var jump_velocity: float = 500.0
+var jump_velocity: float = 600.0
 
 ## The default gravity multiplier of the player. It's simply multiplying the gravity vector
 ## with this value. It's affected by the global gravity and mofidiers, like Area2D regions.
@@ -155,7 +155,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("jump"):
 		air = max(0, air - 0.002)
 	if is_on_ceiling():
-		velocity.y *= -1
+		velocity.y *= -0.1
 	$"../CanvasLayer/ProgressBar".value = air
 
 	# On ground
@@ -278,7 +278,7 @@ func _process(_delta):
 func jump():
 	if air == 0:
 		return
-	velocity.y = -jump_velocity
+	velocity.y = -jump_velocity * (air / 2 + 0.5)
 	is_jumping = true
 #	jumped.emit()
 	_on_jumped()

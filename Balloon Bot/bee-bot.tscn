@@ -38,6 +38,7 @@ autoplay = "idle"
 anims/idle = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
