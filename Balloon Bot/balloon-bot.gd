@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 ## The maximum horizontal speed of the player running in px/s.
 ## This is also the maximum speed player can acccelerate to when jumping.
-var max_speed: float = 275.0
+var max_speed: float = 300.0
 
 ## The acceleration of the player when running on ground in px/s².
 var acceleration: float = 1250.0
@@ -225,7 +225,13 @@ func _physics_process(delta):
 			facing_right = false
 
 		was_on_floor = false
-	
+		
+		if $"../TileMap".world_to_map(position).x < -55:
+			$"../CanvasLayer/VictoryLabel".show()
+			$"../CanvasLayer/RestartButton".show()
+		if $"../TileMap".world_to_map(position).y > 70:
+# warning-ignore:return_value_discarded
+			get_tree().reload_current_scene()
 
 # warning-ignore:return_value_discarded
 	move_and_slide(velocity, Vector2.UP)

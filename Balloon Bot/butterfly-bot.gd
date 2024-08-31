@@ -24,6 +24,7 @@ func _on_ButterflyBot_body_entered(body):
 
 func win():
 	$"../CanvasLayer/VictoryLabel".show()
+	$"../CanvasLayer/VictoryLabel".text = "Victory! (2/2)"
 	$"../CanvasLayer/RestartButton".show()
 	fly_tween.kill()
 	fall_tween.kill()
