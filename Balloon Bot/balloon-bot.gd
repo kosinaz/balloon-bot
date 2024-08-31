@@ -359,3 +359,7 @@ func get_gravity():
 func deflate():
 	air = max(0, air - 0.1)
 	$"../CanvasLayer/AnimationPlayer".play("deflate")
+
+func _on_RestartButton_pressed():
+# warning-ignore:return_value_discarded
+	get_tree().reload_current_scene()
